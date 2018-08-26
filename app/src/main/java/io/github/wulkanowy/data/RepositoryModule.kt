@@ -41,4 +41,12 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideStudentDao(database: AppDatabase) = database.studentDao()
+
+    @Singleton
+    @Provides
+    fun provideSemesterDao(database: AppDatabase) = database.semesterDao()
+
+    @Singleton
+    @Provides
+    fun provideGradeDao(database: AppDatabase) = database.gradeDao()
 }

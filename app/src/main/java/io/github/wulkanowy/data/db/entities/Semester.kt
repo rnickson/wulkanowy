@@ -6,11 +6,14 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "Semesters",
-        indices = [Index(value = ["diary_id", "semester_id"], unique = true)])
+        indices = [Index(value = ["semester_id", "diary_id", "student_id"], unique = true)])
 data class Semester(
 
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
+
+        @ColumnInfo(name = "student_id")
+        var studentId: String,
 
         @ColumnInfo(name = "diary_id")
         var diaryId: String,
@@ -19,8 +22,11 @@ data class Semester(
         var diaryName: String = "",
 
         @ColumnInfo(name = "semester_id")
-        var semesterId: String,
+        var semesterId: Int,
 
         @ColumnInfo(name = "semester_name")
-        var semesterName: String = ""
+        var semesterName: Int = 0,
+
+        @ColumnInfo(name = "is_current")
+        var current: Boolean = false
 )

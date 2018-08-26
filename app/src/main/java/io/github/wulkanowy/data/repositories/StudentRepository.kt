@@ -23,6 +23,10 @@ class StudentRepository @Inject constructor(
     val isStudentLoggedIn: Boolean
         get() = local.isStudentLoggedIn
 
+    fun initLastStudentSession(): Completable {
+        return local.getLastStudent().map { remote.initApi(it) }.ignoreElement()
+    }
+
     fun getConnectedStudents(email: String, password: String, symbol: String): Single<List<Student>> {
         cachedStudents = ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap { isConnected ->
@@ -32,9 +36,11 @@ class StudentRepository @Inject constructor(
         return cachedStudents
     }
 
-    fun save(student: Student): Completable = local.save(student)
-
-    fun getCurrentStudent(): Single<Student> = local.getCurrentStudent()
+    fun save(student: Student): Completable {
+        return remote.getSemesters(student).flatMapCompletable {
+            local.saveSemesters(it)
+        }.concatWith(local.saveStudent(student))
+    }
 
     fun clearCache() {
         cachedStudents = Single.just(emptyList())
