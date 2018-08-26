@@ -22,7 +22,7 @@ data class Semester(
         var diaryName: String = "",
 
         @ColumnInfo(name = "semester_id")
-        var semesterId: Int,
+        var semesterId: String,
 
         @ColumnInfo(name = "semester_name")
         var semesterName: Int = 0,

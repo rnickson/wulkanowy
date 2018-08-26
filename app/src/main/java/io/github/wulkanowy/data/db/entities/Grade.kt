@@ -12,10 +12,10 @@ data class Grade(
         var id: Long = 0,
 
         @ColumnInfo(name = "semester_id")
-        var semesterId: Int = 0,
+        var semesterId: String = "",
 
         @ColumnInfo(name = "student_id")
-        var studentId: Int = 0,
+        var studentId: String = "",
 
         var subject: String,
 
@@ -34,4 +34,3 @@ data class Grade(
 
         var teacher: String
 )
-
