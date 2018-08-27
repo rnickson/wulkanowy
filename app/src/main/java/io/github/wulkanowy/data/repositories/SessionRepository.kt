@@ -2,9 +2,10 @@ package io.github.wulkanowy.data.repositories
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.local.StudentLocal
-import io.github.wulkanowy.data.repositories.remote.StudentRemote
+import io.github.wulkanowy.data.repositories.local.SessionLocal
+import io.github.wulkanowy.data.repositories.remote.SessionRemote
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -12,20 +13,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StudentRepository @Inject constructor(
-        private val local: StudentLocal,
-        private val remote: StudentRemote,
+class SessionRepository @Inject constructor(
+        private val local: SessionLocal,
+        private val remote: SessionRemote,
         private val settings: InternetObservingSettings) {
 
     lateinit var cachedStudents: Single<List<Student>>
         private set
-
-    val isStudentLoggedIn: Boolean
-        get() = local.isStudentLoggedIn
-
-    fun initLastStudentSession(): Completable {
-        return local.getLastStudent().map { remote.initApi(it) }.ignoreElement()
-    }
 
     fun getConnectedStudents(email: String, password: String, symbol: String): Single<List<Student>> {
         cachedStudents = ReactiveNetwork.checkInternetConnectivity(settings)
@@ -36,7 +30,18 @@ class StudentRepository @Inject constructor(
         return cachedStudents
     }
 
-    fun save(student: Student): Completable {
+    fun initLastSession(): Single<Boolean> {
+        return local.getLastStudent().map { remote.initApi(it) }
+                .isEmpty
+                .map { !it }
+    }
+
+    fun getSemesters(): Single<List<Semester>> {
+        return local.getLastStudent()
+                .flatMapSingle { local.getSemesters(it) }
+    }
+
+    fun saveStudent(student: Student): Completable {
         return remote.getSemesters(student).flatMapCompletable {
             local.saveSemesters(it)
         }.concatWith(local.saveStudent(student))

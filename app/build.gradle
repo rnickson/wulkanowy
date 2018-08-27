@@ -72,7 +72,7 @@ ext.supportVersion = "27.1.1"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.github.wulkanowy:api:88ede83149'
+    implementation 'com.github.wulkanowy:api:acba21d7fd'
 
     implementation "com.android.support:support-v4:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
@@ -98,7 +98,7 @@ dependencies {
 
     implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.0"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.1"
 
     implementation "org.apache.commons:commons-lang3:3.8"
     implementation "org.apache.commons:commons-collections4:4.2"

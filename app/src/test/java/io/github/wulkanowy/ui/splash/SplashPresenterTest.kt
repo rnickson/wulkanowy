@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.splash
 
 import io.github.wulkanowy.data.ErrorHandler
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SessionRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -15,7 +15,7 @@ class SplashPresenterTest {
     lateinit var splashView: SplashView
 
     @Mock
-    lateinit var studentRepository: StudentRepository
+    lateinit var sessionRepository: SessionRepository
 
     @Mock
     lateinit var errorHandler: ErrorHandler
@@ -25,19 +25,19 @@ class SplashPresenterTest {
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(studentRepository, errorHandler)
+        presenter = SplashPresenter(sessionRepository, errorHandler)
     }
 
     @Test
     fun testOpenLoginView() {
-        doReturn(false).`when`(studentRepository).isStudentLoggedIn
+        doReturn(false).`when`(sessionRepository).isStudentLoggedIn
         presenter.attachView(splashView)
         verify(splashView).openLoginActivity()
     }
 
     @Test
     fun testMainMainView() {
-        doReturn(true).`when`(studentRepository).isStudentLoggedIn
+        doReturn(true).`when`(sessionRepository).isStudentLoggedIn
         presenter.attachView(splashView)
         verify(splashView).openMainActivity()
     }

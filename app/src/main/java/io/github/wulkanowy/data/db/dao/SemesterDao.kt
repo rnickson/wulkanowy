@@ -13,6 +13,6 @@ interface SemesterDao {
     @Insert(onConflict = REPLACE)
     fun insertAll(semester: List<Semester>)
 
-    @Query("SELECT * FROM Semesters WHERE student_id = :studentId AND is_current = 1")
-    fun getCurrentSemester(studentId: String): Single<Semester>
+    @Query("SELECT * FROM Semesters WHERE student_id = :studentId")
+    fun getSemester(studentId: String): Single<List<Semester>>
 }

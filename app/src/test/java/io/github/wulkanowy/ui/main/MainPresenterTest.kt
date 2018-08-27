@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.main
 
 import io.github.wulkanowy.TestSchedulers
 import io.github.wulkanowy.data.ErrorHandler
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SessionRepository
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations
 class MainPresenterTest {
 
     @Mock
-    lateinit var repository: StudentRepository
+    lateinit var repository: SessionRepository
 
     @Mock
     lateinit var errorHandler: ErrorHandler

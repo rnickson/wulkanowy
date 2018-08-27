@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StudentRemote @Inject constructor(private val api: Api) {
+class SessionRemote @Inject constructor(private val api: Api) {
 
     fun getConnectedStudents(email: String, password: String, symbol: String): Single<List<Student>> {
         return Single.just(initApi(Student(email = email, password = password, symbol = symbol)))

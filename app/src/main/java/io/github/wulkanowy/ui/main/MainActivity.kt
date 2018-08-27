@@ -27,7 +27,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     lateinit var navController: FragNavController
 
     companion object {
-        const val DEFAULT_TAB = 0
+        const val DEFAULT_TAB = 2
 
         fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
@@ -50,7 +50,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
                     MoreFragment.newInstance()
             )
             fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-            createEager = true
+            //createEager = true
             transactionListener = this@MainActivity
         }
     }
