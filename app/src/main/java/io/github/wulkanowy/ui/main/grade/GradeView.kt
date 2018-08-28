@@ -8,5 +8,9 @@ interface GradeView : BaseView {
 
     fun updateData(data: List<GradeHeader>)
 
-    fun weightString(): String
+    fun showEmptyView(show: Boolean)
+
+    fun showProgress(show: Boolean)
+
+    fun isViewEmpty(): Boolean
 }

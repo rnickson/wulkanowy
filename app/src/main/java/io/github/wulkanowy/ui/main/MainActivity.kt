@@ -35,7 +35,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        messageView = mainContainer
+        messageView = mainFragmentContainer
         presenter.attachView(this)
         navController.initialize(DEFAULT_TAB, savedInstanceState)
     }

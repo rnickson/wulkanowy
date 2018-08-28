@@ -24,21 +24,26 @@ class GradePresenter @Inject constructor(
                 .map { it.single { semester -> semester.current } }
                 .flatMap { gradeRepository.getGrades(it) }
                 .map { it.groupBy { grade -> grade.subject } }
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ list ->
-                    view?.updateData(list.map { map ->
-                        GradeHeader(
-                                subject = map.key,
-                                average = calcAverage(map.value).toString(),
-                                number = map.value.size.toString()
-                        ).apply {
-                            subItems = (map.value.map {
-                                GradeItem(it, view?.weightString().orEmpty())
+                .map { items ->
+                    items.map {
+                        GradeHeader().apply {
+                            subject = it.key
+                            average = calcAverage(it.value)
+                            number = it.value.size
+                            subItems = (it.value.map { item ->
+                                GradeItem().apply { grade = item }
                             })
                         }
-                    })
-                }) { errorHandler.proceed(it) })
+                    }
+                }
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .doOnSuccess { if (it.isEmpty()) view?.showEmptyView(true) }
+                .doOnError { view?.run { if (isViewEmpty()) showEmptyView(true) } }
+                .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
+    }
+
+    fun onUpdateDataList(size: Int) {
+        if (size != 0) view?.showProgress(false)
     }
 }
-

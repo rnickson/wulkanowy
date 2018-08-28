@@ -13,16 +13,14 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_grade.*
 import org.apache.commons.lang3.time.DateFormatUtils.format
 
-class GradeItem(private val grade: Grade, private val weightString: String)
-    : AbstractFlexibleItem<GradeItem.ViewHolder>() {
+class GradeItem : AbstractFlexibleItem<GradeItem.ViewHolder>() {
 
-    override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
+    lateinit var grade: Grade
+
+    private var valueColor = 0
+
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
-    }
-
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
-                                position: Int, payloads: MutableList<Any>?) {
-        holder?.bind(grade, weightString)
     }
 
     override fun getLayoutRes() = R.layout.item_grade
@@ -41,24 +39,26 @@ class GradeItem(private val grade: Grade, private val weightString: String)
         return grade.hashCode()
     }
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<*>?) : FlexibleViewHolder(view, adapter),
-            LayoutContainer {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
+                                position: Int, payloads: MutableList<Any>?) {
+        if (valueColor == 0) valueColor = getValueColor(grade.value)
+        val weightString = holder.containerView.resources.getString(R.string.grade_weight)
 
-        private var valueColor = 0
-
-        fun bind(item: Grade, weightString: String) {
-            if (valueColor == 0) valueColor = getValueColor(item.value)
-
+        holder.run {
             gradeItemValue.run {
-                text = item.value
+                text = grade.value
                 setBackgroundResource(valueColor)
             }
-            gradeItemDescription.text = if (item.description.isNotEmpty()) item.description else item.gradeSymbol
-            gradeItemDate.text = format(item.date, DATE_PATTERN)
-            gradeItemWeight.text = "%s: %s".format(weightString, item.weight)
+            gradeItemDescription.text = if (grade.description.isNotEmpty()) grade.description else grade.gradeSymbol
+            gradeItemDate.text = format(grade.date, DATE_PATTERN)
+            gradeItemWeight.text = "%s: %s".format(weightString, grade.weight)
         }
+    }
 
-        override val containerView: View?
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),
+            LayoutContainer {
+
+        override val containerView: View
             get() = contentView
     }
 }

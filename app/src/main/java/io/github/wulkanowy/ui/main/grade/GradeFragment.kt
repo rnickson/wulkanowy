@@ -3,11 +3,14 @@ package io.github.wulkanowy.ui.main.grade
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.utils.extension.setOnUpdateListener
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 
@@ -39,6 +42,7 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeAdapter.run {
             isAutoCollapseOnExpand = true
             isAutoScrollOnExpand = true
+            setOnUpdateListener { presenter.onUpdateDataList(it) }
         }
         gradeRecycler.run {
             adapter = gradeAdapter
@@ -51,5 +55,13 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeAdapter.updateDataSet(data, true)
     }
 
-    override fun weightString(): String = getString(R.string.grade_weight)
+    override fun isViewEmpty(): Boolean = gradeAdapter.isEmpty
+
+    override fun showEmptyView(show: Boolean) {
+        gradeEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showProgress(show: Boolean) {
+        gradeProgress.visibility = if (show) VISIBLE else GONE
+    }
 }

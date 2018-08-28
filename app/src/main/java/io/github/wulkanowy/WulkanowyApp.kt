@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -24,6 +25,8 @@ class WulkanowyApp : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
+        if (LeakCanary.isInAnalyzerProcess(this)) return
+        LeakCanary.install(this)
 
         if (BuildConfig.DEBUG) {
             enableDebugLog()

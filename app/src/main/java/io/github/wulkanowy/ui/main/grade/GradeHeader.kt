@@ -10,17 +10,16 @@ import io.github.wulkanowy.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_grade.*
 
-class GradeHeader(private val subject: String,
-                  private val average: String,
-                  private val number: String) : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() {
+class GradeHeader : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() {
+
+    lateinit var subject: String
+
+    var number = 0
+
+    var average = 0f
 
     override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
         return ViewHolder(view, adapter)
-    }
-
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
-                                position: Int, payloads: MutableList<Any>?) {
-        holder?.bind(subject, average, number)
     }
 
     override fun getLayoutRes() = R.layout.header_grade
@@ -40,6 +39,22 @@ class GradeHeader(private val subject: String,
         return subject.hashCode()
     }
 
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
+                                position: Int, payloads: MutableList<Any>?) {
+        val res = holder.containerView.resources
+
+        holder.run {
+            gradeHeaderSubject.text = subject
+            gradeHeaderAverage.text = res.run {
+                if (average == 0f) getString(R.string.grade_no_average)
+                else getString(R.string.grade_average, average)
+            }
+            gradeHeaderNumber.text = res.getQuantityString(R.plurals.grade_number_item, number, number)
+
+            gradeHeaderPredicted.visibility = GONE
+            gradeHeaderFinal.visibility = GONE
+        }
+    }
 
     class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : ExpandableViewHolder(view, adapter),
             LayoutContainer {
@@ -48,18 +63,9 @@ class GradeHeader(private val subject: String,
             contentView.setOnClickListener(this)
         }
 
-        fun bind(subject: String, average: String, number: String) {
-            gradeHeaderSubject.text = subject
-            gradeHeaderAverage.text = average
-            gradeHeaderNumber.text = number
-            gradeHeaderFinal.visibility = GONE
-            gradeHeaderPredicted.visibility = GONE
-        }
-
         override fun shouldNotifyParentOnClick() = true
 
-        override val containerView: View?
+        override val containerView: View
             get() = contentView
     }
 }
-
