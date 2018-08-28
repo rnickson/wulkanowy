@@ -18,4 +18,7 @@ class GradeLocal @Inject constructor(private val gradeDb: GradeDao) {
         gradeDb.insertAll(grades)
     }
 
+    fun deleteGrades(grades: List<Grade>) {
+        gradeDb.deleteAll(grades)
+    }
 }

@@ -15,8 +15,11 @@ class MainPresenter @Inject constructor(
     override fun attachView(view: MainView) {
         super.attachView(view)
         view.run {
-            initFragmentController()
+            showActionBar(false)
             initBottomNav()
+            initFragmentController()
+            showProgress(false)
+            showActionBar(true)
         }
     }
 

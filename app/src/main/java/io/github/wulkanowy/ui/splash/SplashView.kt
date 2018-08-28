@@ -7,4 +7,6 @@ interface SplashView : BaseView {
     fun openLoginActivity()
 
     fun openMainActivity()
+
+    fun finishApp()
 }

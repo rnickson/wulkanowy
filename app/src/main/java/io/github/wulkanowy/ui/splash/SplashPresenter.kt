@@ -16,7 +16,10 @@ class SplashPresenter @Inject constructor(private val sessionRepository: Session
         disposable.add(sessionRepository.initLastSession()
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .subscribe({ view.run { if (it) openMainActivity() else openLoginActivity() } },
-                        { errorHandler.proceed(it) }))
+                .subscribe({ view.run { if (it) openMainActivity() else openLoginActivity() } }
+                ) {
+                    errorHandler.proceed(it)
+                    view.finishApp()
+                })
     }
 }

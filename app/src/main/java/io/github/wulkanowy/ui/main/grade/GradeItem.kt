@@ -1,23 +1,23 @@
 package io.github.wulkanowy.ui.main.grade
 
 import android.view.View
+import android.view.View.GONE
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.utils.DATE_PATTERN
-import io.github.wulkanowy.utils.getValueColor
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_grade.*
-import org.apache.commons.lang3.time.DateFormatUtils.format
 
 class GradeItem : AbstractFlexibleItem<GradeItem.ViewHolder>() {
 
     lateinit var grade: Grade
 
-    private var valueColor = 0
+    lateinit var weightString: String
+
+    var valueColor = 0
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
@@ -41,17 +41,15 @@ class GradeItem : AbstractFlexibleItem<GradeItem.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
                                 position: Int, payloads: MutableList<Any>?) {
-        if (valueColor == 0) valueColor = getValueColor(grade.value)
-        val weightString = holder.containerView.resources.getString(R.string.grade_weight)
-
         holder.run {
             gradeItemValue.run {
                 text = grade.value
                 setBackgroundResource(valueColor)
             }
             gradeItemDescription.text = if (grade.description.isNotEmpty()) grade.description else grade.gradeSymbol
-            gradeItemDate.text = format(grade.date, DATE_PATTERN)
+            gradeItemDate.text = grade.date
             gradeItemWeight.text = "%s: %s".format(weightString, grade.weight)
+            gradeItemNote.visibility = GONE
         }
     }
 

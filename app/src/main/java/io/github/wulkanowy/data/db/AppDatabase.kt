@@ -2,8 +2,6 @@ package io.github.wulkanowy.data.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
-import io.github.wulkanowy.data.db.converter.DateConverter
 import io.github.wulkanowy.data.db.dao.GradeDao
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
@@ -18,7 +16,6 @@ import javax.inject.Singleton
         version = 1,
         exportSchema = false
 )
-@TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDao

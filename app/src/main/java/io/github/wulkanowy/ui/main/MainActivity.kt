@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ncapdevi.fragnav.FragNavController
@@ -50,7 +52,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
                     MoreFragment.newInstance()
             )
             fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-            //createEager = true
+            // createEager = true
             transactionListener = this@MainActivity
         }
     }
@@ -87,6 +89,14 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
 
     override fun setViewTitle(title: String) {
         setTitle(title)
+    }
+
+    override fun showActionBar(show: Boolean) {
+        supportActionBar?.run { if (show) show() else hide() }
+    }
+
+    override fun showProgress(show: Boolean) {
+        mainProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun defaultTitle(): String = getString(R.string.main_title)

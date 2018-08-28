@@ -13,4 +13,14 @@ interface GradeView : BaseView {
     fun showProgress(show: Boolean)
 
     fun isViewEmpty(): Boolean
+
+    fun setRefresh(show: Boolean)
+
+    fun emptyAverageString(): String
+
+    fun averageString(): String
+
+    fun gradeNumberString(number: Int): String
+
+    fun weightString(): String
 }

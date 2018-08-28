@@ -14,9 +14,9 @@ class GradeHeader : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() 
 
     lateinit var subject: String
 
-    var number = 0
+    lateinit var number: String
 
-    var average = 0f
+    lateinit var average: String
 
     override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
         return ViewHolder(view, adapter)
@@ -41,18 +41,14 @@ class GradeHeader : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() 
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
                                 position: Int, payloads: MutableList<Any>?) {
-        val res = holder.containerView.resources
-
         holder.run {
             gradeHeaderSubject.text = subject
-            gradeHeaderAverage.text = res.run {
-                if (average == 0f) getString(R.string.grade_no_average)
-                else getString(R.string.grade_average, average)
-            }
-            gradeHeaderNumber.text = res.getQuantityString(R.plurals.grade_number_item, number, number)
-
+            gradeHeaderAverage.text = average
+            gradeHeaderNumber.text = number
             gradeHeaderPredicted.visibility = GONE
             gradeHeaderFinal.visibility = GONE
+
+            gradeHeaderNote.visibility = GONE
         }
     }
 

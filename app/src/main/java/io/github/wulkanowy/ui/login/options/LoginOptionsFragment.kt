@@ -47,7 +47,7 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun updateData(data: List<LoginOptionsItem>) {
         loginAdapter.run {
-            updateDataSet(data)
+            updateDataSet(data, true)
         }
     }
 

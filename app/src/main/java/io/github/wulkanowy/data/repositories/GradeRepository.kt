@@ -18,13 +18,24 @@ class GradeRepository @Inject constructor(
         private val remote: GradeRemote
 ) {
 
-    fun getGrades(semester: Semester): Single<List<Grade>> {
-        return local.getGrades(semester).switchIfEmpty(
-                ReactiveNetwork.checkInternetConnectivity(settings)
+    fun getGrades(semester: Semester, forceRefresh: Boolean = false): Single<List<Grade>> {
+        return local.getGrades(semester).filter { !forceRefresh }
+                .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
                             if (it) remote.getGrades(semester)
                             else Single.error(UnknownHostException())
-                        }.doOnSuccess { local.saveGrades(it) })
+                        }.flatMap { newGrades ->
+                            local.getGrades(semester).toSingle(emptyList())
+                                    .map { grades ->
+                                        val deleteList = grades - newGrades
+                                        val newList = newGrades - grades
+
+                                        if (grades.isEmpty()) newList.map { it.isNew = true }
+
+                                        local.deleteGrades(deleteList)
+                                        local.saveGrades(newList)
+                                    }.flatMap { Single.just(newGrades) }
+                        })
 
     }
 }

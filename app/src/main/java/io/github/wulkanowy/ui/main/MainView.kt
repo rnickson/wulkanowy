@@ -15,4 +15,8 @@ interface MainView : BaseView {
     fun defaultTitle(): String
 
     fun mapOfTitles(): Map<Int, String>
+
+    fun showActionBar(show: Boolean)
+
+    fun showProgress(show: Boolean)
 }

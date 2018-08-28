@@ -45,10 +45,10 @@ class GradeFragment : BaseFragment(), GradeView {
             setOnUpdateListener { presenter.onUpdateDataList(it) }
         }
         gradeRecycler.run {
-            adapter = gradeAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = gradeAdapter
         }
+        gradeSwipe.setOnRefreshListener { presenter.loadData(forceRefresh = true) }
     }
 
     override fun updateData(data: List<GradeHeader>) {
@@ -64,4 +64,17 @@ class GradeFragment : BaseFragment(), GradeView {
     override fun showProgress(show: Boolean) {
         gradeProgress.visibility = if (show) VISIBLE else GONE
     }
+
+    override fun setRefresh(show: Boolean) {
+        gradeSwipe.isRefreshing = show
+    }
+
+    override fun emptyAverageString(): String = getString(R.string.grade_no_average)
+
+    override fun averageString(): String = getString(R.string.grade_average)
+
+    override fun gradeNumberString(number: Int): String = resources.getQuantityString(R.plurals.grade_number_item, number, number)
+
+    override fun weightString(): String = getString(R.string.grade_weight)
+
 }
