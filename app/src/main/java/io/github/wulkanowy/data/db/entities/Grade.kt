@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.db.entities
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Grades")
 data class Grade(
@@ -29,7 +30,8 @@ data class Grade(
         var date: String,
 
         var teacher: String
-) {
+) : Serializable {
+
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 

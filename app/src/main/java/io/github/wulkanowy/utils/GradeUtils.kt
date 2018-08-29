@@ -48,3 +48,13 @@ fun getValueColor(value: String): Int {
 
 }
 
+fun getColorName(hexValue: String): Int {
+    return when (hexValue) {
+        "000000" -> R.string.all_black
+        "F04C4C" -> R.string.all_red
+        "20A4F7" -> R.string.all_blue
+        "6ECD07" -> R.string.all_green
+        else -> R.string.all_empty_color
+    }
+}
+

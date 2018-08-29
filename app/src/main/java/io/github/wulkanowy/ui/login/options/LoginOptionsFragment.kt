@@ -34,7 +34,13 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     }
 
     override fun initRecycler() {
-        loginAdapter.setOnItemClickListener { item -> item?.let { presenter.onSelectStudent(it.student) } }
+        loginAdapter.run {
+            setOnItemClickListener { position ->
+                getItem(position)?.let {
+                    presenter.onSelectStudent(it.student)
+                }
+            }
+        }
         loginOptionsRecycler.run {
             adapter = loginAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)

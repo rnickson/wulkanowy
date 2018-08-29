@@ -10,7 +10,6 @@ import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.main.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.main.exam.ExamFragment
 import io.github.wulkanowy.ui.main.grade.GradeFragment
-import io.github.wulkanowy.ui.main.grade.GradeModule
 import io.github.wulkanowy.ui.main.more.MoreFragment
 import io.github.wulkanowy.ui.main.timetable.TimetableFragment
 
@@ -37,7 +36,7 @@ abstract class MainModule {
     abstract fun bindExamFragment(): ExamFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = [GradeModule::class])
+    @ContributesAndroidInjector()
     abstract fun bindGradeFragment(): GradeFragment
 
     @PerFragment

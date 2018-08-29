@@ -8,8 +8,10 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.utils.extension.setOnItemClickListener
 import io.github.wulkanowy.utils.extension.setOnUpdateListener
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
@@ -19,8 +21,7 @@ class GradeFragment : BaseFragment(), GradeView {
     @Inject
     lateinit var presenter: GradePresenter
 
-    @Inject
-    lateinit var gradeAdapter: FlexibleAdapter<GradeHeader>
+    private val gradeAdapter = FlexibleAdapter<AbstractFlexibleItem<*>>(null)
 
     companion object {
         fun newInstance() = GradeFragment()
@@ -43,6 +44,13 @@ class GradeFragment : BaseFragment(), GradeView {
             isAutoCollapseOnExpand = true
             isAutoScrollOnExpand = true
             setOnUpdateListener { presenter.onUpdateDataList(it) }
+            setOnItemClickListener { position ->
+                getItem(position).let {
+                    if (it is GradeItem) {
+                        GradeDialog.newInstance(it.grade).show(fragmentManager, it.toString())
+                    }
+                }
+            }
         }
         gradeRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)

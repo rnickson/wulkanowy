@@ -1,15 +1,14 @@
 package io.github.wulkanowy.utils.extension
 
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 
-fun <K : AbstractFlexibleItem<*>, T : FlexibleAdapter<K>> T.setOnItemClickListener(listener: (item: K?) -> Unit) {
+fun FlexibleAdapter<*>.setOnItemClickListener(listener: (position: Int) -> Unit) {
     addListener(FlexibleAdapter.OnItemClickListener { _, position ->
-        listener(getItem(position))
+        listener(position)
         true
     })
 }
 
-fun <T : FlexibleAdapter<*>> T.setOnUpdateListener(listener: (size: Int) -> Unit) {
+fun FlexibleAdapter<*>.setOnUpdateListener(listener: (size: Int) -> Unit) {
     addListener(FlexibleAdapter.OnUpdateListener { listener(it) })
 }

@@ -35,6 +35,8 @@
 
     <style name="WulkanowyTheme.SplashTheme" parent="WulkanowyTheme">
         <item name="android:windowBackground">@drawable/layer_splash_background</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

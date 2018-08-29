@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/gradeItemValue"
         android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:background="@color/grade_default"
         android:gravity="center"

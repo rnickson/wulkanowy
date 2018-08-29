@@ -23,9 +23,11 @@ class MainPresenter @Inject constructor(
         }
     }
 
-    fun onTabSelected(position: Int): Boolean {
-        view?.switchMenuFragment(position)
-        return true
+    fun onTabSelected(position: Int, wasSelected: Boolean): Boolean {
+        return if (!wasSelected) {
+            view?.switchMenuFragment(position)
+            true
+        } else false
     }
 
     fun onMenuFragmentChange(position: Int) {

@@ -52,7 +52,6 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
                     MoreFragment.newInstance()
             )
             fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-            // createEager = true
             transactionListener = this@MainActivity
         }
     }
@@ -71,8 +70,8 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
             titleState = AHBottomNavigation.TitleState.ALWAYS_SHOW
             currentItem = DEFAULT_TAB
             isBehaviorTranslationEnabled = false
-            setOnTabSelectedListener { position, _ ->
-                presenter.onTabSelected(position)
+            setOnTabSelectedListener { position, wasSelected ->
+                presenter.onTabSelected(position, wasSelected)
             }
         }
     }
@@ -88,7 +87,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     }
 
     override fun setViewTitle(title: String) {
-        setTitle(title)
+        supportActionBar?.title = title
     }
 
     override fun showActionBar(show: Boolean) {
