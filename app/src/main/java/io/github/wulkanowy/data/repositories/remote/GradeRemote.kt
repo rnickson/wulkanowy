@@ -13,8 +13,12 @@ import javax.inject.Singleton
 class GradeRemote @Inject constructor(private val api: Api) {
 
     fun getGrades(semester: Semester): Single<List<Grade>> {
-        return Single.just(api.run { diaryId = semester.diaryId })
-                .flatMap { api.getGrades(semester.semesterId.toInt()) }
+        return Single.just(api.run {
+            if (diaryId != semester.diaryId) {
+                diaryId = semester.diaryId
+                notifyDataChanged()
+            }
+        }).flatMap { api.getGrades(semester.semesterId.toInt()) }
                 .map { grades ->
                     grades.map {
                         Grade(

@@ -8,7 +8,6 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import eu.davidea.flexibleadapter.FlexibleAdapter
 import io.fabric.sdk.android.Fabric
 import io.github.wulkanowy.BuildConfig.DEBUG
 import io.github.wulkanowy.di.DaggerAppComponent
@@ -30,7 +29,6 @@ class WulkanowyApp : DaggerApplication() {
     }
 
     private fun enableDebugLog() {
-        FlexibleAdapter.enableLogs(eu.davidea.flexibleadapter.utils.Log.Level.DEBUG)
         Timber.plant(LoggerUtils.DebugLogTree())
     }
 

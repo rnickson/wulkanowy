@@ -1,8 +1,6 @@
 package io.github.wulkanowy.ui.splash
 
 import android.os.Bundle
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.login.LoginActivity
 import io.github.wulkanowy.ui.main.MainActivity
@@ -23,20 +21,12 @@ class SplashActivity : BaseActivity(), SplashView {
         presenter.detachView()
     }
 
-    override fun showMessage(text: String) {
-        Toast.makeText(applicationContext, text, LENGTH_LONG).show()
-    }
-
-    override fun finishApp() {
-        finish()
-    }
-
-    override fun openLoginActivity() {
+    override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this))
         finish()
     }
 
-    override fun openMainActivity() {
+    override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
         finish()
     }

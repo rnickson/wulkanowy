@@ -9,55 +9,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gradeRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/gradeRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <RelativeLayout
-                android:id="@+id/gradeProgress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/gradeEmpty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:visibility="gone">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/gradeEmptyTitle"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="40dp"
-                    android:minHeight="100dp"
-                    android:minWidth="100dp"
-                    app:srcCompat="@drawable/ic_menu_main_grade_26dp"
-                    app:tint="?android:attr/textColorPrimary"
-                    tools:ignore="contentDescription" />
-
-                <TextView
-                    android:id="@+id/gradeEmptyTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="46dp"
-                    android:gravity="center"
-                    android:text="@string/grade_no_items"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-        </FrameLayout>
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:id="@+id/gradeProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/gradeEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            app:srcCompat="@drawable/ic_menu_main_grade_26dp"
+            app:tint="?android:attr/textColorPrimary"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:id="@+id/gradeEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/grade_no_items"
+            android:textSize="20sp" />
+    </LinearLayout>
 </FrameLayout>

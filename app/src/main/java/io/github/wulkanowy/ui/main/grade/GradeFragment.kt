@@ -21,7 +21,7 @@ class GradeFragment : BaseFragment(), GradeView {
     @Inject
     lateinit var presenter: GradePresenter
 
-    private val gradeAdapter = FlexibleAdapter<AbstractFlexibleItem<*>>(null)
+    private val gradeAdapter = FlexibleAdapter<AbstractFlexibleItem<*>>(null, null, true)
 
     companion object {
         fun newInstance() = GradeFragment()

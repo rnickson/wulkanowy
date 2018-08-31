@@ -42,15 +42,17 @@ class SessionRemote @Inject constructor(private val api: Api) {
         }
     }
 
-    fun initApi(student: Student) {
-        api.run {
-            email = student.email
-            password = student.password
-            symbol = student.symbol
-            host = "vulcan.net.pl"
-            schoolId = student.schoolId
-            studentId = student.studentId
-            onConfigChange()
+    fun initApi(student: Student, checkInit: Boolean = false) {
+        if (if (checkInit) api.studentId.isEmpty() else true) {
+            api.run {
+                email = student.email
+                password = student.password
+                symbol = student.symbol
+                host = "vulcan.net.pl"
+                schoolId = student.schoolId
+                studentId = student.studentId
+                notifyDataChanged()
+            }
         }
     }
 }

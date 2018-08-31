@@ -16,6 +16,8 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="bottomNavBackground">@color/bottom_nav_background_inverse</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
+        <item name="android:windowAnimationStyle">@null</item>
+
     </style>
 
     <style name="WulkanowyTheme.DarkActionBar" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">

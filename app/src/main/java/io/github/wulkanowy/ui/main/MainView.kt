@@ -4,9 +4,7 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface MainView : BaseView {
 
-    fun initFragmentController()
-
-    fun initBottomNav()
+    fun initView()
 
     fun switchMenuFragment(position: Int)
 
@@ -17,6 +15,4 @@ interface MainView : BaseView {
     fun mapOfTitles(): Map<Int, String>
 
     fun showActionBar(show: Boolean)
-
-    fun showProgress(show: Boolean)
 }

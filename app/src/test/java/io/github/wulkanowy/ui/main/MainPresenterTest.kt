@@ -1,9 +1,6 @@
 package io.github.wulkanowy.ui.main
 
-import io.github.wulkanowy.TestSchedulers
 import io.github.wulkanowy.data.ErrorHandler
-import io.github.wulkanowy.data.repositories.SessionRepository
-import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -11,9 +8,6 @@ import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 class MainPresenterTest {
-
-    @Mock
-    lateinit var repository: SessionRepository
 
     @Mock
     lateinit var errorHandler: ErrorHandler
@@ -28,21 +22,18 @@ class MainPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(mainView)
 
-        doReturn(Completable.complete()).`when`(repository).initLastStudentSession() //TODO Temporary solution
-
-        presenter = MainPresenter(errorHandler, repository, TestSchedulers())
+        presenter = MainPresenter(errorHandler)
         presenter.attachView(mainView)
     }
 
     @Test
     fun initMenuTest() {
-        verify(mainView).initBottomNav()
-        verify(mainView).initFragmentController()
+        verify(mainView).initView()
     }
 
     @Test
     fun onTabSelectedTest() {
-        presenter.onTabSelected(1)
+        presenter.onTabSelected(1, false)
         verify(mainView).switchMenuFragment(1)
     }
 

@@ -18,6 +18,9 @@ class SessionRepository @Inject constructor(
         private val remote: SessionRemote,
         private val settings: InternetObservingSettings) {
 
+    val isSessionSaved
+        get() = local.isSessionSaved
+
     lateinit var cachedStudents: Single<List<Student>>
         private set
 
@@ -30,15 +33,12 @@ class SessionRepository @Inject constructor(
         return cachedStudents
     }
 
-    fun initLastSession(): Single<Boolean> {
-        return local.getLastStudent().map { remote.initApi(it) }
-                .isEmpty
-                .map { !it }
-    }
-
     fun getSemesters(): Single<List<Semester>> {
         return local.getLastStudent()
-                .flatMapSingle { local.getSemesters(it) }
+                .flatMapSingle {
+                    remote.initApi(it, true)
+                    local.getSemesters(it)
+                }
     }
 
     fun saveStudent(student: Student): Completable {

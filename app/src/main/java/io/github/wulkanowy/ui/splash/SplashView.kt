@@ -4,9 +4,7 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface SplashView : BaseView {
 
-    fun openLoginActivity()
+    fun openLoginView()
 
-    fun openMainActivity()
-
-    fun finishApp()
+    fun openMainView()
 }

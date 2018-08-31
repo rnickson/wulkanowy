@@ -30,8 +30,20 @@ class GradePresenter @Inject constructor(
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
                 .doFinally { view?.setRefresh(false) }
-                .doOnSuccess { if (it.isEmpty()) view?.showEmptyView(true) }
-                .doOnError { view?.run { if (isViewEmpty()) showEmptyView(true) } }
+                .doOnSuccess {
+                    if (it.isEmpty()) {
+                        view?.run {
+                            showEmptyView(true)
+                            showProgress(false)
+                        }
+                    }
+                }
+                .doOnError {
+                    view?.run {
+                        showProgress(false)
+                        if (isViewEmpty()) showEmptyView(true)
+                    }
+                }
                 .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
     }
 

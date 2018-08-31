@@ -25,6 +25,9 @@ class SessionLocal @Inject constructor(
         const val LAST_USER_KEY: String = "last_user_id"
     }
 
+    val isSessionSaved
+        get() = sharedPref.getLong(LAST_USER_KEY, defaultValue = 0L) != 0L
+
     fun saveStudent(student: Student): Completable {
         return Single.fromCallable { studentDb.insert(student.copy(password = encrypt(student.password, context))) }
                 .map { sharedPref.putLong(LAST_USER_KEY, it) }

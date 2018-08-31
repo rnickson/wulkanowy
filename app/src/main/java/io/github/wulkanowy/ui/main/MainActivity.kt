@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ncapdevi.fragnav.FragNavController
@@ -21,12 +19,14 @@ import io.github.wulkanowy.ui.main.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener {
+class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
     @Inject
     lateinit var presenter: MainPresenter
 
     @Inject
     lateinit var navController: FragNavController
+
+    override val numberOfRootFragments: Int = 5
 
     companion object {
         const val DEFAULT_TAB = 2
@@ -39,24 +39,11 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
         setContentView(R.layout.activity_main)
         messageView = mainFragmentContainer
         presenter.attachView(this)
+
         navController.initialize(DEFAULT_TAB, savedInstanceState)
     }
 
-    override fun initFragmentController() {
-        navController.run {
-            rootFragments = listOf(
-                    GradeFragment.newInstance(),
-                    AttendanceFragment.newInstance(),
-                    ExamFragment.newInstance(),
-                    TimetableFragment.newInstance(),
-                    MoreFragment.newInstance()
-            )
-            fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-            transactionListener = this@MainActivity
-        }
-    }
-
-    override fun initBottomNav() {
+    override fun initView() {
         mainBottomNav.run {
             addItems(mutableListOf(
                     AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_menu_main_grade_26dp, 0),
@@ -70,9 +57,27 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
             titleState = AHBottomNavigation.TitleState.ALWAYS_SHOW
             currentItem = DEFAULT_TAB
             isBehaviorTranslationEnabled = false
+
             setOnTabSelectedListener { position, wasSelected ->
                 presenter.onTabSelected(position, wasSelected)
             }
+        }
+
+        navController.run {
+            rootFragmentListener = this@MainActivity
+            transactionListener = this@MainActivity
+            fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
+        }
+    }
+
+    override fun getRootFragment(index: Int): Fragment {
+        return when (index) {
+            0 -> GradeFragment.newInstance()
+            1 -> AttendanceFragment.newInstance()
+            2 -> ExamFragment.newInstance()
+            3 -> TimetableFragment.newInstance()
+            4 -> MoreFragment.newInstance()
+            else -> throw IllegalStateException()
         }
     }
 
@@ -92,10 +97,6 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
 
     override fun showActionBar(show: Boolean) {
         supportActionBar?.run { if (show) show() else hide() }
-    }
-
-    override fun showProgress(show: Boolean) {
-        mainProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun defaultTitle(): String = getString(R.string.main_title)
