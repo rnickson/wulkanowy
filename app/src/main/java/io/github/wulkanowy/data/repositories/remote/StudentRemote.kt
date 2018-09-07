@@ -15,7 +15,7 @@ class StudentRemote @Inject constructor(private val api: Api) {
             it.password = password
             it.symbol = symbol
             it.host = "vulcan.net.pl"
-            it.onConfigChange()
+            it.notifyDataChanged()
         }
         return api.getPupils().map { students ->
             students.map {
