@@ -29,17 +29,9 @@ class GradePresenter @Inject constructor(
                 .map { createGradeItems(it) }
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .doFinally { view?.setRefresh(false) }
-                .doOnSuccess {
-                    if (it.isEmpty()) {
-                        view?.run {
-                            showEmptyView(true)
-                            showProgress(false)
-                        }
-                    }
-                }
-                .doOnError {
+                .doFinally {
                     view?.run {
+                        setRefresh(false)
                         showProgress(false)
                         if (isViewEmpty()) showEmptyView(true)
                     }

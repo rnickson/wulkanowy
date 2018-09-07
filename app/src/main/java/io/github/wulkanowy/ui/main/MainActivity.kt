@@ -19,14 +19,12 @@ import io.github.wulkanowy.ui.main.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
+class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener {
     @Inject
     lateinit var presenter: MainPresenter
 
     @Inject
     lateinit var navController: FragNavController
-
-    override val numberOfRootFragments: Int = 5
 
     companion object {
         const val DEFAULT_TAB = 2
@@ -64,20 +62,15 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
         }
 
         navController.run {
-            rootFragmentListener = this@MainActivity
             transactionListener = this@MainActivity
             fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-        }
-    }
-
-    override fun getRootFragment(index: Int): Fragment {
-        return when (index) {
-            0 -> GradeFragment.newInstance()
-            1 -> AttendanceFragment.newInstance()
-            2 -> ExamFragment.newInstance()
-            3 -> TimetableFragment.newInstance()
-            4 -> MoreFragment.newInstance()
-            else -> throw IllegalStateException()
+            rootFragments = listOf(
+                    GradeFragment.newInstance(),
+                    AttendanceFragment.newInstance(),
+                    ExamFragment.newInstance(),
+                    TimetableFragment.newInstance(),
+                    MoreFragment.newInstance()
+            )
         }
     }
 

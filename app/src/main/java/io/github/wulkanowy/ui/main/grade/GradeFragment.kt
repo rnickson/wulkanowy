@@ -21,7 +21,8 @@ class GradeFragment : BaseFragment(), GradeView {
     @Inject
     lateinit var presenter: GradePresenter
 
-    private val gradeAdapter = FlexibleAdapter<AbstractFlexibleItem<*>>(null, null, true)
+    @Inject
+    lateinit var gradeAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
     companion object {
         fun newInstance() = GradeFragment()
@@ -74,7 +75,7 @@ class GradeFragment : BaseFragment(), GradeView {
     }
 
     override fun setRefresh(show: Boolean) {
-        gradeSwipe.isRefreshing = show
+        // gradeSwipe.isRefreshing = show
     }
 
     override fun emptyAverageString(): String = getString(R.string.grade_no_average)
