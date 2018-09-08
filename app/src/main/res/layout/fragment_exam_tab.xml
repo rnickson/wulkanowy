@@ -4,7 +4,7 @@
     android:id="@+id/exams_tab_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.wulkanowy.ui.main.grades.GradesFragment">
+    tools:context="io.github.wulkanowy.ui.main.exam.ExamWeekFragment">
 
     <RelativeLayout
         android:id="@+id/exams_tab_fragment_progress_bar"
