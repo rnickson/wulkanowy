@@ -1,15 +1,14 @@
 package io.github.wulkanowy.ui.main.grade
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.view.ViewGroup
+import android.support.v7.app.AlertDialog
+import android.view.*
+import android.view.View.*
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.utils.extension.setOnItemClickListener
 import io.github.wulkanowy.utils.extension.setOnUpdateListener
@@ -28,8 +27,17 @@ class GradeFragment : BaseFragment(), GradeView {
         fun newInstance() = GradeFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_grade, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.action_menu_grade, menu)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,19 +53,21 @@ class GradeFragment : BaseFragment(), GradeView {
             isAutoCollapseOnExpand = true
             isAutoScrollOnExpand = true
             setOnUpdateListener { presenter.onUpdateDataList(it) }
-            setOnItemClickListener { position ->
-                getItem(position).let {
-                    if (it is GradeItem) {
-                        GradeDialog.newInstance(it.grade).show(fragmentManager, it.toString())
-                    }
-                }
-            }
+            setOnItemClickListener { presenter.onGradeItemSelected(getItem(it)) }
         }
         gradeRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = gradeAdapter
         }
         gradeSwipe.setOnRefreshListener { presenter.loadData(forceRefresh = true) }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.gradeMenuSemester -> presenter.onSemesterSwitchSelected()
+            R.id.gradeMenuSummary -> presenter.onSummarySwitchSelected()
+            else -> false
+        }
     }
 
     override fun updateData(data: List<GradeHeader>) {
@@ -74,8 +84,32 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeProgress.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun showContentView(show: Boolean) {
+        gradeRecycler.visibility = if (show) VISIBLE else INVISIBLE
+    }
+
     override fun setRefresh(show: Boolean) {
-        // gradeSwipe.isRefreshing = show
+        gradeSwipe.isRefreshing = show
+    }
+
+    override fun showGradeDialog(grade: Grade) {
+        GradeDialog.newInstance(grade).show(fragmentManager, grade.toString())
+    }
+
+    override fun showSemesterDialog(selectedIndex: Int) {
+        val semesters = arrayOf(getString(R.string.grade_semester, 1),
+                getString(R.string.grade_semester, 2))
+
+        context?.let {
+            AlertDialog.Builder(it)
+                    .setSingleChoiceItems(semesters, selectedIndex) { dialog, which ->
+                        presenter.onSemesterSelected(which)
+                        dialog.dismiss()
+                    }
+                    .setTitle(R.string.grade_switch_semester)
+                    .setNegativeButton(R.string.all_cancel) { dialog, _ -> dialog.dismiss() }
+                    .show()
+        }
     }
 
     override fun emptyAverageString(): String = getString(R.string.grade_no_average)

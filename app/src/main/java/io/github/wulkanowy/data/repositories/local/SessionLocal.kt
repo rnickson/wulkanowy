@@ -40,10 +40,7 @@ class SessionLocal @Inject constructor(
     }
 
     fun saveSemesters(semesters: List<Semester>): Completable {
-        return Single.just(semesters).map { list -> list.sortedBy { it.semesterId } }
-                .map { it.last().current = true }
-                .map { semesterDb.insertAll(semesters) }
-                .ignoreElement()
+        return Single.fromCallable { semesterDb.insertAll(semesters) }.ignoreElement()
     }
 
     fun getSemesters(student: Student): Single<List<Semester>> {

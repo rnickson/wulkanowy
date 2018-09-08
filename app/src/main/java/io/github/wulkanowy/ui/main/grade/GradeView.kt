@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.main.grade
 
+import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeView : BaseView {
@@ -8,7 +9,13 @@ interface GradeView : BaseView {
 
     fun updateData(data: List<GradeHeader>)
 
+    fun showGradeDialog(grade: Grade)
+
+    fun showSemesterDialog(selectedIndex: Int)
+
     fun showEmptyView(show: Boolean)
+
+    fun showContentView(show: Boolean)
 
     fun showProgress(show: Boolean)
 

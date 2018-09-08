@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener {
+
     @Inject
     lateinit var presenter: MainPresenter
 
@@ -35,9 +36,10 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(mainToolbar)
         messageView = mainFragmentContainer
-        presenter.attachView(this)
 
+        presenter.attachView(this)
         navController.initialize(DEFAULT_TAB, savedInstanceState)
     }
 

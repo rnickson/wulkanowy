@@ -35,7 +35,8 @@ class SessionRemote @Inject constructor(private val api: Api) {
                             diaryId = it.diaryId,
                             diaryName = it.diaryName,
                             semesterId = it.semesterId.toString(),
-                            semesterName = it.semesterNumber)
+                            semesterName = it.semesterNumber,
+                            current = it.current)
                 }
 
             }

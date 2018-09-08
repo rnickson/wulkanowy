@@ -1,7 +1,9 @@
 package io.github.wulkanowy.ui.main.grade
 
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -16,15 +18,20 @@ class GradePresenter @Inject constructor(
         private val gradeRepository: GradeRepository,
         private val sessionRepository: SessionRepository) : BasePresenter<GradeView>(errorHandler) {
 
+    private var selectedSemester = -1
+
     override fun attachView(view: GradeView) {
         super.attachView(view)
         view.initView()
     }
 
-    fun loadData(forceRefresh: Boolean = false) {
+    fun loadData(forceRefresh: Boolean = false, semesterIndex: Int = -1) {
         disposable.add(sessionRepository.getSemesters()
-                .map { it.single { semester -> semester.current } }
-                .flatMap { gradeRepository.getGrades(it, forceRefresh) }
+                .map { selectSemester(it, semesterIndex) }
+                .flatMap {
+                    selectedSemester = it.semesterName - 1
+                    gradeRepository.getGrades(it, forceRefresh)
+                }
                 .map { it.groupBy { grade -> grade.subject } }
                 .map { createGradeItems(it) }
                 .subscribeOn(schedulers.backgroundThread())
@@ -33,10 +40,52 @@ class GradePresenter @Inject constructor(
                     view?.run {
                         setRefresh(false)
                         showProgress(false)
-                        if (isViewEmpty()) showEmptyView(true)
+                    }
+                }
+                .doAfterSuccess {
+                    view?.run {
+                        showEmptyView(it.isEmpty())
+                        showContentView(it.isNotEmpty())
                     }
                 }
                 .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
+    }
+
+    fun onGradeItemSelected(item: AbstractFlexibleItem<*>?) {
+        if (item is GradeItem) view?.showGradeDialog(item.grade)
+    }
+
+    fun onSemesterSelected(index: Int) {
+        view?.run {
+            showEmptyView(false)
+            showProgress(true)
+            showContentView(false)
+        }
+        loadData(semesterIndex = index)
+    }
+
+    fun onSemesterSwitchSelected(): Boolean {
+        if (selectedSemester != -1) view?.showSemesterDialog(selectedSemester)
+        return true
+    }
+
+    fun onSummarySwitchSelected(): Boolean {
+        return true
+    }
+
+    fun onUpdateDataList(size: Int) {
+        if (size != 0) view?.showProgress(false)
+    }
+
+    private fun selectSemester(semesters: List<Semester>, index: Int): Semester {
+        return semesters.single { it.current }.let { currentSemester ->
+            if (index == -1) currentSemester
+            else semesters.single { semester ->
+                semester.run {
+                    semesterName - 1 == index && diaryId == currentSemester.diaryId
+                }
+            }
+        }
     }
 
     private fun createGradeItems(items: Map<String, List<Grade>>): List<GradeHeader> {
@@ -58,9 +107,5 @@ class GradePresenter @Inject constructor(
                 })
             }
         }
-    }
-
-    fun onUpdateDataList(size: Int) {
-        if (size != 0) view?.showProgress(false)
     }
 }

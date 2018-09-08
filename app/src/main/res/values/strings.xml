@@ -94,6 +94,7 @@
     <string name="all_color">Color</string>
     <string name="all_details">Details</string>
     <string name="all_close">Close</string>
+    <string name="all_cancel">Cancel</string>
     <string name="all_no_data">No data</string>
     <string name="all_subject">Subject</string>
 
