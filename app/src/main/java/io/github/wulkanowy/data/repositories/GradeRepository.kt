@@ -30,11 +30,12 @@ class GradeRepository @Inject constructor(
                                         val deleteList = grades - newGrades
                                         val newList = newGrades - grades
 
-                                        if (grades.isEmpty()) newList.map { it.isNew = true }
+                                        if (!grades.isEmpty()) newList.map { it.isNew = true }
 
                                         local.deleteGrades(deleteList)
                                         local.saveGrades(newList)
-                                    }.flatMap { Single.just(newGrades) }
+                                        newGrades
+                                    }
                         })
 
     }

@@ -38,7 +38,7 @@ class GradePresenter @Inject constructor(
                 .observeOn(schedulers.mainThread())
                 .doFinally {
                     view?.run {
-                        setRefresh(false)
+                        showRefresh(false)
                         showProgress(false)
                     }
                 }
@@ -70,6 +70,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onSummarySwitchSelected(): Boolean {
+        view?.openSummaryView()
         return true
     }
 

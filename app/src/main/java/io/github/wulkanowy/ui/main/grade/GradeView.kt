@@ -7,6 +7,8 @@ interface GradeView : BaseView {
 
     fun initView()
 
+    fun openSummaryView()
+
     fun updateData(data: List<GradeHeader>)
 
     fun showGradeDialog(grade: Grade)
@@ -21,7 +23,7 @@ interface GradeView : BaseView {
 
     fun isViewEmpty(): Boolean
 
-    fun setRefresh(show: Boolean)
+    fun showRefresh(show: Boolean)
 
     fun emptyAverageString(): String
 

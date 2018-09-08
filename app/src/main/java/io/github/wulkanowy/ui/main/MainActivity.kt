@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ncapdevi.fragnav.FragNavController
-import com.ncapdevi.fragnav.FragNavController.Companion.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
+import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.main.attendance.AttendanceFragment
@@ -19,7 +19,7 @@ import io.github.wulkanowy.ui.main.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener {
+class MainActivity : BaseActivity(), MainView, FragNavController.TransactionListener, FragmentNavigationListener {
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -65,7 +65,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
 
         navController.run {
             transactionListener = this@MainActivity
-            fragmentHideStrategy = DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
+            fragmentHideStrategy = HIDE
             rootFragments = listOf(
                     GradeFragment.newInstance(),
                     AttendanceFragment.newInstance(),
@@ -103,6 +103,14 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
                 3 to R.string.timetable_title,
                 4 to R.string.more_title
         ).mapValues { getString(it.value) }
+    }
+
+    override fun pushFragment(fragment: Fragment) {
+        navController.pushFragment(fragment)
+    }
+
+    override fun onBackPressed() {
+        if (!navController.popFragment()) super.onBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

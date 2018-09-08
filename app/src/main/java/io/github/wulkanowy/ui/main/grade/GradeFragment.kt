@@ -10,6 +10,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.main.FragmentNavigationListener
+import io.github.wulkanowy.ui.main.grade.summary.GradeSummaryFragment
 import io.github.wulkanowy.utils.extension.setOnItemClickListener
 import io.github.wulkanowy.utils.extension.setOnUpdateListener
 import kotlinx.android.synthetic.main.fragment_grade.*
@@ -88,7 +90,7 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeRecycler.visibility = if (show) VISIBLE else INVISIBLE
     }
 
-    override fun setRefresh(show: Boolean) {
+    override fun showRefresh(show: Boolean) {
         gradeSwipe.isRefreshing = show
     }
 
@@ -110,6 +112,10 @@ class GradeFragment : BaseFragment(), GradeView {
                     .setNegativeButton(R.string.all_cancel) { dialog, _ -> dialog.dismiss() }
                     .show()
         }
+    }
+
+    override fun openSummaryView() {
+        (activity as? FragmentNavigationListener)?.pushFragment(GradeSummaryFragment.newInstance())
     }
 
     override fun emptyAverageString(): String = getString(R.string.grade_no_average)

@@ -5,9 +5,11 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import io.github.wulkanowy.data.db.dao.GradeDao
+import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.DATABASE_NAME
@@ -15,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Database(
-        entities = [Student::class, Semester::class, Grade::class],
+        entities = [Student::class, Semester::class, Grade::class, GradeSummary::class],
         version = 1,
         exportSchema = false
 )
@@ -33,4 +35,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun semesterDao(): SemesterDao
 
     abstract fun gradeDao(): GradeDao
+
+    abstract fun gradeSummaryDao(): GradeSummaryDao
 }
