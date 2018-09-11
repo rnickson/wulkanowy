@@ -76,9 +76,7 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeAdapter.updateDataSet(data, true)
     }
 
-    override fun isViewEmpty(): Boolean = gradeAdapter.isEmpty
-
-    override fun showEmptyView(show: Boolean) {
+    override fun showEmpty(show: Boolean) {
         gradeEmpty.visibility = if (show) VISIBLE else GONE
     }
 
@@ -86,7 +84,7 @@ class GradeFragment : BaseFragment(), GradeView {
         gradeProgress.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showContentView(show: Boolean) {
+    override fun showContent(show: Boolean) {
         gradeRecycler.visibility = if (show) VISIBLE else INVISIBLE
     }
 

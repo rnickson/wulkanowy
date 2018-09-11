@@ -27,12 +27,12 @@ class GradePresenter @Inject constructor(
 
     fun loadData(forceRefresh: Boolean = false, semesterIndex: Int = -1) {
         disposable.add(sessionRepository.getSemesters()
-                .map { selectSemester(it, semesterIndex) }
+                .map { selectSemester(it, if (semesterIndex != -1) semesterIndex else selectedSemester) }
                 .flatMap {
                     selectedSemester = it.semesterName - 1
                     gradeRepository.getGrades(it, forceRefresh)
                 }
-                .map { it.groupBy { grade -> grade.subject } }
+                .map { it.groupBy { grade -> grade.subject }.toSortedMap() }
                 .map { createGradeItems(it) }
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
@@ -44,8 +44,8 @@ class GradePresenter @Inject constructor(
                 }
                 .doAfterSuccess {
                     view?.run {
-                        showEmptyView(it.isEmpty())
-                        showContentView(it.isNotEmpty())
+                        showEmpty(it.isEmpty())
+                        showContent(it.isNotEmpty())
                     }
                 }
                 .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
@@ -57,9 +57,9 @@ class GradePresenter @Inject constructor(
 
     fun onSemesterSelected(index: Int) {
         view?.run {
-            showEmptyView(false)
+            showEmpty(false)
             showProgress(true)
-            showContentView(false)
+            showContent(false)
         }
         loadData(semesterIndex = index)
     }
@@ -99,7 +99,7 @@ class GradePresenter @Inject constructor(
                     else averageString().format(gradesAverage)
                 }.orEmpty()
                 number = view?.gradeNumberString(it.value.size).orEmpty()
-                subItems = (it.value.map { item ->
+                subItems = (it.value.reversed().map { item ->
                     GradeItem().apply {
                         grade = item
                         weightString = view?.weightString().orEmpty()

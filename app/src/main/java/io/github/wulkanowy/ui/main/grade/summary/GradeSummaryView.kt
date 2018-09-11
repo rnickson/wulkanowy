@@ -6,11 +6,17 @@ interface GradeSummaryView : BaseView {
 
     fun initView()
 
-    fun updateDataSet(data: List<GradeSummaryItem>)
+    fun popView()
+
+    fun updateDataSet(data: List<GradeSummaryItem>, finalAvg: String, calculatedAvg: String)
 
     fun showProgress(show: Boolean)
 
     fun showRefresh(show: Boolean)
+
+    fun showContent(show: Boolean)
+
+    fun showEmpty(show: Boolean)
 
     fun predictedString(): String
 

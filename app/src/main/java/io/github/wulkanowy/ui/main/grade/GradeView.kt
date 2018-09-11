@@ -15,13 +15,11 @@ interface GradeView : BaseView {
 
     fun showSemesterDialog(selectedIndex: Int)
 
-    fun showEmptyView(show: Boolean)
+    fun showEmpty(show: Boolean)
 
-    fun showContentView(show: Boolean)
+    fun showContent(show: Boolean)
 
     fun showProgress(show: Boolean)
-
-    fun isViewEmpty(): Boolean
 
     fun showRefresh(show: Boolean)
 

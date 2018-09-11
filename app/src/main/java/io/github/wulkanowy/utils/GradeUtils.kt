@@ -2,6 +2,7 @@ package io.github.wulkanowy.utils
 
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeSummary
 
 private val validGrade = "^(\\++|-|--|=)?[0-6](\\++|-|--|=)?$".toRegex()
 
@@ -20,15 +21,10 @@ fun calcAverage(gradeList: List<Grade>): Float {
     return if (counter == 0f) counter else counter / denominator
 }
 
-private fun getCalculatedValue(value: String): Float {
-    return value.run {
-        when {
-            matches("[-][0-6]|[0-6][-]".toRegex()) -> replace("-", "").toFloat() - 0.33f
-            matches("[+][0-6]|[0-6][+]".toRegex()) -> replace("+", "").toFloat() + 0.33f
-            matches("[-|=]{1,2}[0-6]|[0-6][-|=]{1,2}".toRegex()) -> replace("[-|=]{1,2}".toRegex(), "").toFloat() - 0.5f
-            else -> toFloat()
-        }
-    }
+fun calcSummaryAverage(gradesSummaryList: List<GradeSummary>): Float {
+    return gradesSummaryList.mapNotNull {
+        if (it.finalGrade.matches(validGrade)) it.finalGrade.toFloat() else null
+    }.average().toFloat()
 }
 
 fun getValueColor(value: String): Int {
@@ -45,7 +41,6 @@ fun getValueColor(value: String): Int {
             else -> R.color.grade_default
         }
     }
-
 }
 
 fun getColorName(hexValue: String): Int {
@@ -58,3 +53,13 @@ fun getColorName(hexValue: String): Int {
     }
 }
 
+private fun getCalculatedValue(value: String): Float {
+    return value.run {
+        when {
+            matches("[-][0-6]|[0-6][-]".toRegex()) -> replace("-", "").toFloat() - 0.33f
+            matches("[+][0-6]|[0-6][+]".toRegex()) -> replace("+", "").toFloat() + 0.33f
+            matches("[-|=]{1,2}[0-6]|[0-6][-|=]{1,2}".toRegex()) -> replace("[-|=]{1,2}".toRegex(), "").toFloat() - 0.5f
+            else -> toFloat()
+        }
+    }
+}

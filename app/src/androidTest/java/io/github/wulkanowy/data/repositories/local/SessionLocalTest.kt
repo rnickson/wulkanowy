@@ -41,7 +41,7 @@ class SessionLocalTest {
         sessionLocal.saveStudent(Student(email = "test", password = "test123", schoolId = "23")).blockingAwait()
         assert(sharedHelper.getLong(SessionLocal.LAST_USER_KEY, 0) == 1L)
 
-        assert(sessionLocal.isStudentLoggedIn)
+        assert(sessionLocal.isSessionSaved)
 
         val student = sessionLocal.getLastStudent().blockingGet()
         assertEquals("23", student.schoolId)

@@ -11,6 +11,7 @@
         <item name="android:textColorTertiary">@android:color/primary_text_light</item>
         <item name="android:textColorTertiaryInverse">@android:color/primary_text_dark</item>
         <item name="titleTextColor">@android:color/primary_text_dark</item>
+        <item name="colorControlNormal">@android:color/white</item>
         <item name="subtitleTextColor">@android:color/primary_text_dark</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
