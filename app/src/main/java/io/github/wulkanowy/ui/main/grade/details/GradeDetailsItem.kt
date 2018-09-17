@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.grade
+package io.github.wulkanowy.ui.main.grade.details
 
 import android.view.View
 import android.view.View.GONE
@@ -11,7 +11,7 @@ import io.github.wulkanowy.data.db.entities.Grade
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_grade.*
 
-class GradeItem : AbstractFlexibleItem<GradeItem.ViewHolder>() {
+class GradeDetailsItem : AbstractFlexibleItem<GradeDetailsItem.ViewHolder>() {
 
     lateinit var grade: Grade
 
@@ -29,7 +29,7 @@ class GradeItem : AbstractFlexibleItem<GradeItem.ViewHolder>() {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as GradeItem
+        other as GradeDetailsItem
 
         if (grade != other.grade) return false
         return true

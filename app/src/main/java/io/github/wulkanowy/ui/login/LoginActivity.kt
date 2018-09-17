@@ -11,7 +11,6 @@ import io.github.wulkanowy.ui.login.options.LoginOptionsFragment
 import io.github.wulkanowy.utils.extension.setOnSelectPageListener
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
-import javax.inject.Named
 
 class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
 
@@ -19,7 +18,6 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
     lateinit var presenter: LoginPresenter
 
     @Inject
-    @field:Named("Login")
     lateinit var loginAdapter: BasePagerAdapter
 
     companion object {
@@ -38,7 +36,10 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
     }
 
     override fun initAdapter() {
-        loginAdapter.addFragments(LoginFormFragment(), LoginOptionsFragment())
+        loginAdapter.fragments.putAll(mapOf(
+                "1" to LoginFormFragment.newInstance(),
+                "2" to LoginOptionsFragment.newInstance()
+        ))
         loginViewpager.run {
             adapter = loginAdapter
             setOnSelectPageListener { presenter.onPageSelected(it) }
@@ -61,7 +62,7 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
         (loginAdapter.getItem(index) as LoginOptionsFragment).loadData()
     }
 
-    override fun currentViewPosition(): Int = loginViewpager.currentItem
+    override fun currentViewPosition() = loginViewpager.currentItem
 
     public override fun onDestroy() {
         presenter.detachView()

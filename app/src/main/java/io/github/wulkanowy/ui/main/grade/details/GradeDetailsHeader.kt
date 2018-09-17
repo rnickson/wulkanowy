@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.grade
+package io.github.wulkanowy.ui.main.grade.details
 
 import android.view.View
 import android.view.View.GONE
@@ -10,7 +10,7 @@ import io.github.wulkanowy.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_grade.*
 
-class GradeHeader : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() {
+class GradeDetailsHeader : AbstractExpandableItem<GradeDetailsHeader.ViewHolder, GradeDetailsItem>() {
 
     lateinit var subject: String
 
@@ -28,7 +28,7 @@ class GradeHeader : AbstractExpandableItem<GradeHeader.ViewHolder, GradeItem>() 
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as GradeHeader
+        other as GradeDetailsHeader
 
         if (subject != other.subject) return false
 

@@ -25,6 +25,10 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     @Inject
     lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
+    companion object {
+        fun newInstance() = LoginOptionsFragment()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_options, container, false)
     }
@@ -72,5 +76,10 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun showActionBar(show: Boolean) {
         (activity as AppCompatActivity?)?.supportActionBar?.run { if (show) show() else hide() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detachView()
     }
 }

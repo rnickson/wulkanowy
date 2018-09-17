@@ -84,10 +84,6 @@ class GradeSummaryPresenter @Inject constructor(
                 }
     }
 
-    fun onBackPressed(): Boolean {
-        view?.popView()
-        return true
-    }
 
     private fun checkEmpty(gradeSummary: GradeSummary, averages: Map<String, Float>): Boolean {
         return gradeSummary.run {

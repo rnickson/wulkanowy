@@ -21,6 +21,10 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     @Inject
     lateinit var presenter: LoginFormPresenter
 
+    companion object {
+        fun newInstance() = LoginFormFragment()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_form, container, false)
     }
@@ -132,8 +136,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormProgressContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.detachView()
     }
 }

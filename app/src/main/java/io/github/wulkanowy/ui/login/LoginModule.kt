@@ -9,7 +9,6 @@ import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.base.BasePagerAdapter
 import io.github.wulkanowy.ui.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.login.options.LoginOptionsFragment
-import javax.inject.Named
 
 @Module
 internal abstract class LoginModule {
@@ -18,8 +17,8 @@ internal abstract class LoginModule {
     companion object {
 
         @JvmStatic
+        @PerActivity
         @Provides
-        @Named("Login")
         fun provideLoginAdapter(activity: LoginActivity) = BasePagerAdapter(activity.supportFragmentManager)
 
         @JvmStatic

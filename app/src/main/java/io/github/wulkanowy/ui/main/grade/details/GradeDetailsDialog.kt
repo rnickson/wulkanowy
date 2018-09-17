@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.grade
+package io.github.wulkanowy.ui.main.grade.details
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -12,15 +12,15 @@ import io.github.wulkanowy.utils.getValueColor
 import kotlinx.android.synthetic.main.dialog_grade.*
 
 
-class GradeDialog : DialogFragment() {
+class GradeDetailsDialog : DialogFragment() {
 
     private lateinit var grade: Grade
 
     companion object {
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(grade: Grade): GradeDialog {
-            return GradeDialog().apply {
+        fun newInstance(grade: Grade): GradeDetailsDialog {
+            return GradeDetailsDialog().apply {
                 arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, grade) }
             }
         }

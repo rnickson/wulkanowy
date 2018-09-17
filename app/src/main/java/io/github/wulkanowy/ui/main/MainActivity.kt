@@ -110,17 +110,16 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     }
 
     override fun onBackPressed() {
-        navController.run {
-            if (isRootFragment) super.onBackPressed()
-            else {
-                popFragment()
-                if (isRootFragment) supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            }
-        }
+        navController.run { if (isRootFragment) super.onBackPressed() else popFragment() }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         navController.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
     }
 }
