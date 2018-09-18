@@ -8,10 +8,14 @@
         android:id="@+id/gradeTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="10dp"
+        android:background="@color/colorPrimary"
+        android:elevation="5dp"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
         android:visibility="invisible"
-        app:tabMode="fixed" />
+        app:tabIndicatorColor="@android:color/white"
+        app:tabMode="fixed"
+        app:tabTextColor="@android:color/white" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/gradeViewPager"

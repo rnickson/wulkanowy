@@ -57,6 +57,7 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
             titleState = AHBottomNavigation.TitleState.ALWAYS_SHOW
             currentItem = DEFAULT_TAB
             isBehaviorTranslationEnabled = false
+            setTitleTextSizeInSp(10f, 10f)
 
             setOnTabSelectedListener { position, wasSelected ->
                 presenter.onTabSelected(position, wasSelected)

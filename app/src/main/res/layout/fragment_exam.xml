@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/examContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,4 +10,4 @@
         android:gravity="center"
         android:text="Exam" />
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
