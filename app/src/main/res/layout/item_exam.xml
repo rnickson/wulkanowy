@@ -13,7 +13,7 @@
         android:foreground="?attr/selectableItemBackgroundBorderless">
 
         <TextView
-            android:id="@+id/exams_subitem_subject"
+            android:id="@+id/examItemSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -23,32 +23,32 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/exams_subitems_type"
+            android:id="@+id/examItemType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/exams_subitem_subject"
-            android:layout_alignStart="@id/exams_subitem_subject"
-            android:layout_below="@id/exams_subitem_subject"
+            android:layout_alignLeft="@id/examItemSubject"
+            android:layout_alignStart="@id/examItemSubject"
+            android:layout_below="@id/examItemSubject"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:text="@string/app_name"
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/exams_subitems_teacher"
+            android:id="@+id/examItemTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/exams_subitem_subject"
+            android:layout_below="@id/examItemSubject"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/exams_subitems_type"
-            android:layout_toRightOf="@id/exams_subitems_type"
+            android:layout_toEndOf="@id/examItemType"
+            android:layout_toRightOf="@id/examItemType"
             android:gravity="end"
             android:text="@string/app_name"
             android:textSize="13sp" />
