@@ -5,25 +5,19 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="300dp"
-        android:orientation="vertical">
+        android:minWidth="300dp">
 
         <RelativeLayout
-            android:id="@+id/timetable_dialog_relative_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:paddingEnd="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
+            android:layout_marginTop="15dp"
+            android:padding="20dp"
             tools:ignore="UselessParent">
 
             <TextView
-                android:id="@+id/exams_dialog_details"
+                android:id="@+id/examDialogDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -40,117 +34,117 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_subject"
+                android:id="@+id/examDialogSubject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_details"
+                android:layout_below="@+id/examDialogDetails"
                 android:layout_marginTop="10dp"
                 android:text="@string/all_subject"
                 android:textIsSelectable="true"
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_subject_value"
+                android:id="@+id/examDialogSubjectValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_subject"
+                android:layout_below="@+id/examDialogSubject"
                 android:layout_marginTop="3dp"
                 android:text="@string/all_no_data"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_type"
+                android:id="@+id/examDialogType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_subject_value"
+                android:layout_below="@+id/examDialogSubjectValue"
                 android:layout_marginTop="10dp"
                 android:text="@string/exam_type"
                 android:textIsSelectable="true"
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_type_value"
+                android:id="@+id/examDialogTypeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_type"
+                android:layout_below="@+id/examDialogType"
                 android:layout_marginTop="3dp"
                 android:text="@string/all_no_data"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_teacher"
+                android:id="@+id/examDialogTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_type_value"
+                android:layout_below="@+id/examDialogTypeValue"
                 android:layout_marginTop="10dp"
                 android:text="@string/all_teacher"
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_teacher_value"
+                android:id="@+id/examDialogTeacherValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_teacher"
+                android:layout_below="@+id/examDialogTeacher"
                 android:layout_marginTop="3dp"
                 android:text="@string/all_no_data"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_date"
+                android:id="@+id/examDialogDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_teacher_value"
+                android:layout_below="@+id/examDialogTeacherValue"
                 android:layout_marginTop="10dp"
                 android:text="@string/exam_entry_date"
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_date_value"
+                android:id="@+id/examDialogDateValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_date"
+                android:layout_below="@+id/examDialogDate"
                 android:layout_marginTop="3dp"
                 android:text="@string/all_no_data"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_description"
+                android:id="@+id/examDialogDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_date_value"
+                android:layout_below="@+id/examDialogDateValue"
                 android:layout_marginTop="10dp"
                 android:text="@string/all_description"
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/exams_dialog_description_value"
+                android:id="@+id/examDialogDescriptionValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/exams_dialog_description"
+                android:layout_below="@+id/examDialogDescription"
                 android:layout_marginTop="3dp"
                 android:text="@string/all_no_data"
                 android:textIsSelectable="true"
@@ -158,13 +152,13 @@
 
 
             <Button
-                android:id="@+id/exams_dialog_close"
+                android:id="@+id/examDialogClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/exams_dialog_description_value"
+                android:layout_alignTop="@+id/examDialogDescriptionValue"
                 android:layout_marginTop="25dp"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"

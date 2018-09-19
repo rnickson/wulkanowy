@@ -4,6 +4,7 @@ import org.threeten.bp.DayOfWeek.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.temporal.TemporalAdjuster
 import org.threeten.bp.temporal.TemporalAdjusters
 import java.util.*
 
@@ -66,6 +67,14 @@ fun getTodayOrNextDay(next: Boolean, date: LocalDate): String? {
 
 fun isDateInWeek(firstWeekDay: LocalDate, date: LocalDate): Boolean {
     return date.isAfter(firstWeekDay.minusDays(1)) && date.isBefore(firstWeekDay.plusDays(5))
+}
+
+fun getNearMonday(date: LocalDate): LocalDate {
+    return when(date.dayOfWeek) {
+        MONDAY -> date
+        SATURDAY, SUNDAY -> date.with(TemporalAdjusters.next(MONDAY))
+        else -> date.with(TemporalAdjusters.previous(MONDAY))
+    }
 }
 
 /**

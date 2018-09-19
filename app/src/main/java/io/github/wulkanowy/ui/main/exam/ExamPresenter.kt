@@ -7,12 +7,14 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.getNearMonday
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
+import org.threeten.bp.LocalDate
 import java.util.*
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
-        errorHandler: ErrorHandler,
+        private val errorHandler: ErrorHandler,
         private val schedulers: SchedulersManager,
         private val examRepository: ExamRepository,
         private val sessionRepository: SessionRepository
@@ -27,7 +29,7 @@ class ExamPresenter @Inject constructor(
         disposable.add(sessionRepository.getSemesters()
                 .map { selectSemester(it, -1) }
                 .flatMap {
-                    examRepository.getExams(it, Date(), forceRefresh)
+                    examRepository.getExams(it, getNearMonday(LocalDate.now()), forceRefresh)
                 }
                 .map { it.groupBy { exam -> exam.date }.toSortedMap() }
                 .map { createExamItems(it) }
@@ -45,8 +47,7 @@ class ExamPresenter @Inject constructor(
                         showContent(it.isNotEmpty())
                     }
                 }
-                .subscribe({ view?.updateData(it) }) {  }
-        )
+                .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
     }
 
     private fun createExamItems(items: Map<Date, List<Exam>>): List<ExamHeader> {

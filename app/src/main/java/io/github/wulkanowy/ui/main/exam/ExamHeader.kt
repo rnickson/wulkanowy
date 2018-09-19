@@ -6,10 +6,11 @@ import eu.davidea.flexibleadapter.items.AbstractExpandableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.ExpandableViewHolder
 import io.github.wulkanowy.R
-import io.github.wulkanowy.api.DATE_FORMAT
+import io.github.wulkanowy.utils.extension.getWeekDayName
+import io.github.wulkanowy.utils.extension.toFormattedString
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_exam.*
-import org.apache.commons.lang3.time.DateFormatUtils.format
+import org.apache.commons.lang3.StringUtils
 import java.util.*
 
 class ExamHeader : AbstractExpandableItem<ExamHeader.ViewHolder, ExamItem>() {
@@ -40,8 +41,8 @@ class ExamHeader : AbstractExpandableItem<ExamHeader.ViewHolder, ExamItem>() {
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
                                 position: Int, payloads: MutableList<Any>?) {
         holder.run {
-            examHeaderDay.text = format(date, "E")
-            examHeaderDate.text = format(date, DATE_FORMAT)
+            examHeaderDay.text = StringUtils.capitalize(date.getWeekDayName())
+            examHeaderDate.text = date.toFormattedString()
         }
     }
 

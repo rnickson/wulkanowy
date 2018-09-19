@@ -7,8 +7,8 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.local.ExamLocal
 import io.github.wulkanowy.data.repositories.remote.ExamRemote
 import io.reactivex.Single
+import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ class ExamRepository @Inject constructor(
         private val remote: ExamRemote
 ) {
 
-    fun getExams(semester: Semester, date: Date, forceRefresh: Boolean = false): Single<List<Exam>> {
+    fun getExams(semester: Semester, date: LocalDate, forceRefresh: Boolean = false): Single<List<Exam>> {
         return local.getExams(semester, date).filter { !forceRefresh }
                 .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {

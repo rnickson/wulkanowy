@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -39,15 +38,15 @@ class ExamFragment : BaseFragment(), ExamView {
         presenter.run {
             attachView(this@ExamFragment)
             loadData()
-
         }
     }
 
     override fun initView() {
         examAdapter.run {
+            isAutoCollapseOnExpand = true
+            expandItemsAtStartUp()
             setOnUpdateListener { presenter.onUpdateDataList(it) }
             setOnItemClickListener { presenter.onExamItemSelected(getItem(it)) }
-            setDisplayHeadersAtStartUp(true)
         }
         examRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
@@ -77,6 +76,11 @@ class ExamFragment : BaseFragment(), ExamView {
     }
 
     override fun showExamDialog(exam: Exam) {
-        Toast.makeText(context, "Dialog!!", Toast.LENGTH_LONG).show()
+        ExamDialog.newInstance(exam).show(fragmentManager, exam.toString())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detachView()
     }
 }
